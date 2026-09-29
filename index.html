@@ -10,14 +10,24 @@
     <title>Laços que Unem</title>
     <link rel="icon" type="image/png" href="img/favicon-lacos.png" />
     <link rel="stylesheet" href="css/style.css" />
+    <script>
+      // Aplica o tema salvo antes de desenhar a página (evita "piscar" o tema errado)
+      try {
+        const tema = JSON.parse(localStorage.getItem('lacosQueUnem:tema'));
+        if (tema === 'claro' || tema === 'escuro') document.documentElement.dataset.tema = tema;
+      } catch {}
+    </script>
   </head>
   <body>
+    <a class="pular-link" href="#app">Pular para o conteúdo</a>
+
     <header>
       <div class="container header-inner">
         <a class="logo" href="#/">
           <img src="img/logo-lacos.png" alt="" width="34" height="34" />
           Laços que Unem
         </a>
+        <div class="header-acoes">
         <nav aria-label="Navegação principal">
           <ul>
             <li><a href="#/projetos" data-rota="/projetos">Projetos</a></li>
@@ -27,6 +37,10 @@
             </li>
           </ul>
         </nav>
+        <button type="button" class="botao-tema" aria-pressed="false">
+          Modo escuro
+        </button>
+        </div>
       </div>
     </header>
 
@@ -36,25 +50,25 @@
       <div class="container">
         <div class="footer-columns">
           <div>
-            <h4>Laços que Unem</h4>
+            <h2 class="rodape-titulo">Laços que Unem</h2>
             <p>
               ONG dedicada ao apoio de pessoas com câncer, doação de livros e
               captação de recursos.
             </p>
           </div>
-          <div>
-            <h4>Navegação</h4>
+          <nav aria-labelledby="rodape-navegacao">
+            <h2 class="rodape-titulo" id="rodape-navegacao">Navegação</h2>
             <ul>
               <li><a href="#/projetos">Projetos</a></li>
               <li><a href="#/impacto">Impacto</a></li>
               <li><a href="#/voluntario">Seja Voluntário</a></li>
             </ul>
-          </div>
+          </nav>
           <div>
-            <h4>Contato</h4>
+            <h2 class="rodape-titulo">Contato</h2>
             <ul>
-              <li>contato@lacosqueunem.com.br</li>
-              <li>(16) 99999-9999</li>
+              <li><a href="mailto:contato@lacosqueunem.com.br">contato@lacosqueunem.com.br</a></li>
+              <li><a href="tel:+5516999999999">(16) 99999-9999</a></li>
             </ul>
           </div>
         </div>

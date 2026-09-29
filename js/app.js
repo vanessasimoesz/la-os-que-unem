@@ -1,5 +1,6 @@
 import { criarRoteador } from './base/router.js';
 import { marcarMenuAtivo } from './componentes/navegacao.js';
+import { iniciarTema } from './componentes/tema.js';
 
 import { inicioView } from './paginas/inicio.js';
 import { projetosView } from './paginas/projetos.js';
@@ -24,3 +25,13 @@ const roteador = criarRoteador({
 });
 
 roteador.iniciar();
+iniciarTema();
+
+// Link "Pular para o conteúdo": leva o foco direto ao <main>.
+// O preventDefault evita que o roteador trate "#app" como uma rota.
+document.querySelector('.pular-link')?.addEventListener('click', (evento) => {
+  evento.preventDefault();
+  const principal = document.getElementById('app');
+  principal.focus();
+  principal.scrollIntoView();
+});

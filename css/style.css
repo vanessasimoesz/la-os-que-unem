@@ -22,10 +22,78 @@ src: url("../fonts/Fraunces-VariableFont_SOFT\,WONK\,opsz\,wght.ttf");
   --texto: #1c2b27;
   --texto-suave: #5b6a65;
   --borda: #dcd6c9;
+  --borda-campo: #857e70; /* contorno de campos: 4:1 no branco (WCAG 1.4.11) */
   --erro: #b42318;
   --erro-fundo: #fdecea;
   --sucesso: #2f7d4f;
   --raio: 8px;
+
+  /* Tokens semânticos: é o que muda entre os temas */
+  --fundo: var(--bege);          /* fundo da página */
+  --superficie: var(--branco);   /* cartões, cabeçalho, campos */
+  --titulo: var(--verde-escuro); /* títulos, rótulos, menu */
+  --link: var(--verde);          /* links e botões de contorno */
+  --foco: var(--verde-escuro);   /* contorno de foco */
+  --numero: var(--dourado-escuro);
+  color-scheme: light;
+}
+
+/* ---------- Tema escuro ----------
+   1) Segue a preferência do sistema (prefers-color-scheme), a menos que a pessoa escolha "claro".
+   2) Ou é ativado pelo botão do cabeçalho (data-tema="escuro"). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --fundo: #111a18;
+    --superficie: #1b2724;
+    --titulo: #e6efe9;
+    --texto: #dde6e1;
+    --texto-suave: #a9bab3;
+    --link: #8fd0bd;
+    --borda: #34443f;
+    --borda-campo: #7f948c;
+    --erro: #ff8a80;
+    --erro-fundo: #3a1714;
+    --sucesso: #6fcf97;
+    --foco: var(--dourado);
+    --numero: var(--dourado);
+    color-scheme: dark;
+  }
+}
+
+:root[data-tema="escuro"] {
+  --fundo: #111a18;
+  --superficie: #1b2724;
+  --titulo: #e6efe9;
+  --texto: #dde6e1;
+  --texto-suave: #a9bab3;
+  --link: #8fd0bd;
+  --borda: #34443f;
+  --borda-campo: #7f948c;
+  --erro: #ff8a80;
+  --erro-fundo: #3a1714;
+  --sucesso: #6fcf97;
+  --foco: var(--dourado);
+  --numero: var(--dourado);
+  color-scheme: dark;
+}
+
+/* ---------- Alto contraste ----------
+   Quem pede mais contraste no sistema recebe texto e bordas no máximo. */
+@media (prefers-contrast: more) {
+  :root {
+    --texto-suave: var(--texto);
+    --borda: var(--texto);
+    --borda-campo: var(--texto);
+  }
+  a { text-decoration: underline; }
+}
+
+/* Modo de cores forçadas (ex.: Alto Contraste do Windows):
+   o navegador impõe a paleta do sistema; garantimos que foco e bordas continuem visíveis. */
+@media (forced-colors: active) {
+  :focus-visible { outline-color: Highlight; }
+  .btn, .card, .aside-card, .form-card, .opcoes .opcao { border: 1px solid CanvasText; }
+  .barra span { background: Highlight; forced-color-adjust: none; }
 }
 
 * {
@@ -37,13 +105,13 @@ src: url("../fonts/Fraunces-VariableFont_SOFT\,WONK\,opsz\,wght.ttf");
 body {
   font-family: 'Source Sans 3', Arial, sans-serif;
   color: var(--texto);
-  background-color: var(--bege);
+  background-color: var(--fundo);
   line-height: 1.6;
 }
 
 h1, h2, h3 {
   font-family: 'Fraunces', Georgia, serif;
-  color: var(--verde-escuro);
+  color: var(--titulo);
   line-height: 1.2;
 }
 
@@ -57,8 +125,46 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--dourado);
+  outline: 3px solid var(--foco); /* claro: 11:1 no bege | escuro: dourado, 8:1 */
   outline-offset: 2px;
+}
+
+/* Em fundos escuros, o contorno dourado tem mais contraste */
+.hero :focus-visible,
+.page-hero :focus-visible,
+footer :focus-visible,
+.pular-link:focus-visible {
+  outline-color: var(--dourado);
+}
+
+/* Texto só para leitores de tela */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link "Pular para o conteúdo": escondido até receber foco pelo teclado */
+.pular-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 4px;
+  background: var(--verde-escuro);
+  color: var(--branco);
+  font-weight: 600;
+}
+
+.pular-link:focus {
+  top: 16px;
 }
 
 .container {
@@ -78,7 +184,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: var(--branco);
+  background-color: var(--superficie);
   border-bottom: 1px solid var(--borda);
 }
 
@@ -97,29 +203,63 @@ header {
   font-family: 'Fraunces', Georgia, serif;
   font-size: 20px;
   font-weight: 700;
-  color: var(--verde-escuro);
+  color: var(--titulo);
 }
 
-nav ul {
+header nav ul {
   display: flex;
   list-style: none;
   gap: 24px;
 }
 
-nav a {
+header nav a {
   font-weight: 600;
-  color: var(--verde-escuro);
+  color: var(--titulo);
   padding: 4px 0;
   border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s;
 }
 
-nav a:hover {
+header nav a:hover {
   color: var(--dourado-escuro);
 }
 
-nav a[aria-current="page"] {
+header nav a[aria-current="page"] {
   border-bottom-color: var(--dourado);
+}
+
+/* Botão de tema (claro/escuro) */
+.botao-tema {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--borda-campo);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--titulo);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-tema:hover {
+  border-color: var(--titulo);
+}
+
+/* Estado ligado: botão preenchido (o leitor de tela recebe a mesma informação pelo aria-pressed) */
+.botao-tema[aria-pressed="true"] {
+  background: var(--titulo);
+  border-color: var(--titulo);
+  color: var(--superficie);
+}
+
+.header-acoes {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 
@@ -171,8 +311,8 @@ nav a[aria-current="page"] {
 }
 
 .btn-contorno {
-  border-color: var(--verde);
-  color: var(--verde);
+  border-color: var(--link);
+  color: var(--link);
 }
 
 .btn-contorno:hover {
@@ -196,7 +336,7 @@ nav a[aria-current="page"] {
   border: 0;
   font: inherit;
   font-weight: 600;
-  color: var(--verde);
+  color: var(--link);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -259,8 +399,9 @@ nav a[aria-current="page"] {
   font-size: 17px;
 }
 
+.page-hero .sobretitulo,
 .sobretitulo {
-  color: var(--dourado);
+  color: #f2c75c; /* 5,9:1 sobre o verde (WCAG 1.4.3) */
   font-size: 13px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -285,7 +426,7 @@ nav a[aria-current="page"] {
 }
 
 .section-white {
-  background-color: var(--branco);
+  background-color: var(--superficie);
 }
 
 .estreito {
@@ -301,7 +442,7 @@ nav a[aria-current="page"] {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: var(--branco);
+  background-color: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
   padding: 32px;
@@ -313,6 +454,7 @@ nav a[aria-current="page"] {
   box-shadow: 0 10px 24px rgba(22, 58, 51, 0.08);
 }
 
+.card h2,
 .card h3 {
   font-size: 20px;
   margin-bottom: 8px;
@@ -326,7 +468,7 @@ nav a[aria-current="page"] {
 .card a {
   margin-top: auto;
   font-weight: 600;
-  color: var(--verde);
+  color: var(--link);
 }
 
 .card a:hover {
@@ -348,7 +490,7 @@ nav a[aria-current="page"] {
   font-family: 'Fraunces', Georgia, serif;
   font-size: 32px;
   font-weight: 700;
-  color: var(--dourado-escuro);
+  color: var(--numero);
   font-variant-numeric: tabular-nums;
 }
 
@@ -374,7 +516,7 @@ nav a[aria-current="page"] {
 
 .barras a {
   font-weight: 600;
-  color: var(--verde);
+  color: var(--link);
 }
 
 .barra {
@@ -398,12 +540,18 @@ nav a[aria-current="page"] {
 
 .cta {
   background-color: var(--dourado);
+  color: #1c2b27;
   text-align: center;
   padding: 64px 0;
 }
 
 .cta h2 {
+  color: var(--verde-escuro);
   margin-bottom: 8px;
+}
+
+.cta :focus-visible {
+  outline-color: var(--verde-escuro);
 }
 
 .cta p {
@@ -455,8 +603,9 @@ nav a[aria-current="page"] {
 }
 
 .trilha a {
-  color: var(--verde);
+  color: var(--link);
   font-weight: 600;
+  text-decoration: underline; /* não depender só da cor (WCAG 1.4.1) */
 }
 
 .lista-check {
@@ -483,12 +632,13 @@ nav a[aria-current="page"] {
 }
 
 .aside-card {
-  background: var(--branco);
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
   padding: 24px;
 }
 
+.aside-card h2,
 .aside-card h3 {
   font-size: 19px;
   margin-bottom: 14px;
@@ -512,7 +662,7 @@ nav a[aria-current="page"] {
 }
 
 .form-card {
-  background: var(--branco);
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
   padding: 32px;
@@ -545,7 +695,7 @@ nav a[aria-current="page"] {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
-  color: var(--verde-escuro);
+  color: var(--titulo);
 }
 
 .asterisco {
@@ -559,12 +709,17 @@ select,
 textarea {
   width: 100%;
   padding: 11px 14px;
-  border: 1.5px solid var(--borda);
+  border: 1.5px solid var(--borda-campo);
   border-radius: 6px;
-  background: var(--branco);
+  background: var(--superficie);
   color: var(--texto);
   font: inherit;
   transition: border-color .15s, box-shadow .15s;
+}
+
+::placeholder {
+  color: var(--texto-suave);
+  opacity: 1;
 }
 
 textarea {
@@ -572,10 +727,9 @@ textarea {
   min-height: 110px;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
   border-color: var(--verde);
   box-shadow: 0 0 0 3px rgba(31, 78, 69, 0.15);
 }
@@ -620,7 +774,7 @@ textarea:focus {
 
 .opcoes .opcao {
   padding: 8px 14px;
-  border: 1.5px solid var(--borda);
+  border: 1.5px solid var(--borda-campo);
   border-radius: 999px;
   transition: border-color .15s, background-color .15s;
 }
@@ -760,8 +914,10 @@ footer {
   margin-bottom: 32px;
 }
 
-footer h4 {
+footer .rodape-titulo {
   color: var(--branco);
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 16px;
   margin-bottom: 12px;
 }
 
@@ -842,7 +998,7 @@ footer a:hover {
     gap: 8px;
   }
 
-  nav ul {
+  header nav ul {
     gap: 18px;
   }
 

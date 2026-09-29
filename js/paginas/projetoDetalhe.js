@@ -15,8 +15,8 @@ function template(projeto) {
     <section class="section">
       <div class="container detalhe-layout">
         <div class="detalhe-conteudo">
-          <nav class="trilha" aria-label="Você está em">
-            <a href="#/projetos">Projetos</a> <span aria-hidden="true">/</span> <span>${projeto.titulo}</span>
+          <nav class="trilha" aria-label="Trilha de navegação">
+            <a href="#/projetos">Projetos</a> <span aria-hidden="true">/</span> <span aria-current="page">${projeto.titulo}</span>
           </nav>
 
           <h2>Sobre o projeto</h2>
@@ -29,7 +29,7 @@ function template(projeto) {
         </div>
 
         <aside class="aside-card">
-          <h3>Como você pode ajudar</h3>
+          <h2>Como você pode ajudar</h2>
           <ul class="lista-check">
             ${projeto.comoAjudar.map((a) => html`<li>${a}</li>`)}
           </ul>

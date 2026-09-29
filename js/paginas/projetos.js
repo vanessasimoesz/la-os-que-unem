@@ -12,7 +12,7 @@ const template = () => html`
 
   <section class="section">
     <div class="container">
-      ${listaDeProjetos(PROJETOS)}
+      ${listaDeProjetos(PROJETOS, 2)}
     </div>
   </section>`;
 

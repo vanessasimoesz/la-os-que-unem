@@ -46,31 +46,31 @@ function formulario(v, temRascunho) {
       <div class="form-grade">
         ${campo({
           nome: 'nome', rotulo: 'Nome completo', cheio: true,
-          conteudo: html`<input id="nome" name="nome" type="text" value="${v.nome}" autocomplete="name" aria-describedby="erro-nome">`,
+          conteudo: html`<input id="nome" name="nome" type="text" value="${v.nome}" autocomplete="name" aria-required="true" aria-describedby="erro-nome">`,
         })}
         ${campo({
           nome: 'email', rotulo: 'E-mail',
-          conteudo: html`<input id="email" name="email" type="email" value="${v.email}" autocomplete="email" placeholder="nome@email.com" aria-describedby="erro-email">`,
+          conteudo: html`<input id="email" name="email" type="email" value="${v.email}" autocomplete="email" placeholder="nome@email.com" aria-required="true" aria-describedby="erro-email">`,
         })}
         ${campo({
           nome: 'telefone', rotulo: 'Telefone (WhatsApp)',
-          conteudo: html`<input id="telefone" name="telefone" type="tel" value="${v.telefone}" autocomplete="tel" inputmode="numeric" placeholder="(16) 99999-9999" aria-describedby="erro-telefone">`,
+          conteudo: html`<input id="telefone" name="telefone" type="tel" value="${v.telefone}" autocomplete="tel" inputmode="numeric" placeholder="(16) 99999-9999" aria-required="true" aria-describedby="erro-telefone">`,
         })}
         ${campo({
           nome: 'cidade', rotulo: 'Cidade',
-          conteudo: html`<input id="cidade" name="cidade" type="text" value="${v.cidade}" autocomplete="address-level2" aria-describedby="erro-cidade">`,
+          conteudo: html`<input id="cidade" name="cidade" type="text" value="${v.cidade}" autocomplete="address-level2" aria-required="true" aria-describedby="erro-cidade">`,
         })}
         ${campo({
           nome: 'projeto', rotulo: 'Projeto de interesse',
           conteudo: html`
-            <select id="projeto" name="projeto" aria-describedby="erro-projeto">
+            <select id="projeto" name="projeto" aria-required="true" aria-describedby="erro-projeto">
               <option value="">Selecione…</option>
               ${PROJETOS.map((p) => html`<option value="${p.id}" ${v.projeto === p.id ? 'selected' : ''}>${p.titulo}</option>`)}
             </select>`,
         })}
 
         <fieldset class="campo campo-cheio">
-          <legend>Disponibilidade <span class="asterisco" aria-hidden="true">*</span></legend>
+          <legend>Disponibilidade <span class="asterisco" aria-hidden="true">*</span><span class="sr-only"> (obrigatório)</span></legend>
           <div class="opcoes">
             ${DISPONIBILIDADES.map((d) => html`
               <label class="opcao">
@@ -91,7 +91,7 @@ function formulario(v, temRascunho) {
 
         <div class="campo campo-cheio">
           <label class="opcao opcao-termos">
-            <input type="checkbox" name="termos" value="sim" aria-describedby="erro-termos">
+            <input type="checkbox" name="termos" value="sim" aria-required="true" aria-describedby="erro-termos">
             <span>Autorizo a Laços que Unem a entrar em contato comigo sobre o voluntariado. <span class="asterisco" aria-hidden="true">*</span></span>
           </label>
           <p class="erro-msg" id="erro-termos" data-erro="termos"></p>
@@ -134,7 +134,7 @@ const template = (v, temRascunho) => html`
 
       <aside class="form-aside">
         <div class="aside-card">
-          <h3>O que acontece depois?</h3>
+          <h2>O que acontece depois?</h2>
           <ol class="passos">
             <li>Recebemos sua inscrição.</li>
             <li>Entramos em contato em até 5 dias úteis.</li>
@@ -142,7 +142,7 @@ const template = (v, temRascunho) => html`
           </ol>
         </div>
         <div class="aside-card">
-          <h3>Suas inscrições</h3>
+          <h2>Suas inscrições</h2>
           <div id="minhas-inscricoes"></div>
         </div>
       </aside>

@@ -21,7 +21,7 @@ function template(inscricao) {
     <section class="section">
       <div class="container estreito">
         <div class="aside-card resumo">
-          <h3>Resumo da inscrição</h3>
+          <h2>Resumo da inscrição</h2>
           <dl>
             <dt>Nome</dt><dd>${inscricao.nome}</dd>
             <dt>E-mail</dt><dd>${inscricao.email}</dd>
