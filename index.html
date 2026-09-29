@@ -1,18 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Laços que Unem: acolhimento, doação de livros e rede de voluntários para pessoas que enfrentam o câncer."
+    />
     <title>Laços que Unem</title>
-</head>
-<header>
+    <link rel="icon" type="image/png" href="img/favicon-lacos.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container header-inner">
+        <a class="logo" href="#/">
+          <img src="img/logo-lacos.png" alt="" width="34" height="34" />
+          Laços que Unem
+        </a>
+        <nav aria-label="Navegação principal">
+          <ul>
+            <li><a href="#/projetos" data-rota="/projetos">Projetos</a></li>
+            <li><a href="#/impacto" data-rota="/impacto">Impacto</a></li>
+            <li>
+              <a href="#/voluntario" data-rota="/voluntario">Seja Voluntário</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-</header>
-<body>
-<hero>
-    
-</hero>
+    <main id="app" tabindex="-1"></main>
 
-    
-</body>
+    <footer>
+      <div class="container">
+        <div class="footer-columns">
+          <div>
+            <h4>Laços que Unem</h4>
+            <p>
+              ONG dedicada ao apoio de pessoas com câncer, doação de livros e
+              captação de recursos.
+            </p>
+          </div>
+          <div>
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="#/projetos">Projetos</a></li>
+              <li><a href="#/impacto">Impacto</a></li>
+              <li><a href="#/voluntario">Seja Voluntário</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contato</h4>
+            <ul>
+              <li>contato@lacosqueunem.com.br</li>
+              <li>(16) 99999-9999</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          © 2026 Laços que Unem. IV Projeto acadêmico.
+        </div>
+      </div>
+    </footer>
+    <div id="toasts" class="toasts"></div>
+
+    <noscript>
+      <p class="aviso-noscript">
+        Este site precisa do JavaScript ativado para funcionar.
+      </p>
+    </noscript>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
 </html>
